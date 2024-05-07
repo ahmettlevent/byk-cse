@@ -1,8 +1,13 @@
 from datetime import timedelta
+import os
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=os.environ.get("ACCESS_TOKEN_LIFETIME", 60 * 24)
+    ),
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        days=os.environ.get("REFRESH_TOKEN_LIFETIME", 7)
+    ),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,

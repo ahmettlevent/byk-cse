@@ -9,5 +9,5 @@ class IsSuperUser(BasePermission):
 
 class IsRequesterOrSuperUser(BasePermission):
     def has_object_permission(self, request, view, obj):
-        # Check if requested user is requester or superuser
+        # Check if the requesting user is the object owner or a superuser
         return request.user and (obj == request.user or request.user.is_superuser)

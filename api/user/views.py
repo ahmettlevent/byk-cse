@@ -12,9 +12,6 @@ class UserListView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    def filter_queryset(self, queryset):
-        return queryset.filter(is_staff=False)
-
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
