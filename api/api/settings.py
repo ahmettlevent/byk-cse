@@ -15,6 +15,8 @@ from pathlib import Path
 
 import dotenv
 
+from api.jwt_config import SIMPLE_JWT
+
 # Load environment variables from .env file
 dotenv.load_dotenv(dotenv.find_dotenv())
 
@@ -32,7 +34,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 if os.environ.get("DJANGO_DEBUG") == "True":
     DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -46,6 +48,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
+    "rest_framework_simplejwt",
+    "user",
+    "uav",
+    "rental",
 ]
 
 MIDDLEWARE = [
@@ -139,10 +145,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-    ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
+
+# Fixtures
+FIXTURE_DIRS = [
+    BASE_DIR / "fixtures",
+]
+
+# URL Prefix
+URL_PREFIX = os.environ.get("URL_PREFIX", "api/v1")
+
+# Simple JWT settings
+SIMPLE_JWT["SIGNING_KEY"] = SECRET_KEY
