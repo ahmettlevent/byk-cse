@@ -7,7 +7,7 @@ from rest_framework.generics import (
     UpdateAPIView,
 )
 
-from api.permissions import IsRequesterOrSuperUser, IsSuperUser
+from api.permissions import IsRequesterOrSuperUser
 from rental.models import UAVRental
 from rental.serializers import (
     UAVRentalCreateSerializer,
@@ -17,10 +17,17 @@ from rental.serializers import (
 
 
 class UAVRentalListView(ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsSuperUser]
+    permission_classes = [permissions.IsAuthenticated, IsRequesterOrSuperUser]
 
     queryset = UAVRental.objects.all()
     serializer_class = UAVRentalSerializer
+
+    def get_queryset(self):
+        # If the user is a super user, returns all UAV rentals.
+        # Otherwise, returns only the UAV rentals of the requester.
+        if self.request.user.is_superuser:
+            return UAVRental.objects.all()
+        return UAVRental.objects.filter(user=self.request.user)
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)

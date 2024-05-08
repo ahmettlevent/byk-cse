@@ -44,6 +44,7 @@ class UAVRentalCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = UAVRental
         fields = (
+            "id",
             "user",
             "uav",
             "rental_date",

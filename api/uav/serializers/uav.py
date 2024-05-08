@@ -29,6 +29,7 @@ class UAVSerializer(serializers.ModelSerializer):
 
 
 class UAVCreateUpdateSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
     created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=UAVCategorySerializer.Meta.model.objects.all(), source="category"
@@ -37,6 +38,7 @@ class UAVCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = UAV
         fields = (
+            "id",
             "name",
             "brand",
             "model",

@@ -23,4 +23,4 @@ class UAVCategoryCreateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UAVCategory
-        fields = ("name", "description", "created_by")
+        fields = ("id", "name", "description", "created_by")
