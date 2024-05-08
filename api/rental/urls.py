@@ -8,4 +8,5 @@ urlpatterns = [
     path("<int:pk>/", views.UAVRentalDetailView.as_view()),
     path("create/", views.UAVRentalCreateView.as_view()),
     path("<int:pk>/update/", views.UAVRentalUpdateView.as_view()),
+    path("<int:pk>/delete/", views.UAVRentalDeleteView.as_view()),
 ]

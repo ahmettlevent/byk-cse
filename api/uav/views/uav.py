@@ -1,6 +1,7 @@
 from rest_framework import permissions
 from rest_framework.generics import (
     CreateAPIView,
+    DestroyAPIView,
     ListAPIView,
     RetrieveAPIView,
     UpdateAPIView,
@@ -49,3 +50,13 @@ class UAVUpdateView(UpdateAPIView):
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+
+class UAVDeleteView(DestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated, IsSuperUser]
+
+    queryset = UAV.objects.all()
+    serializer_class = UAVSerializer
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)

@@ -8,9 +8,11 @@ urlpatterns = [
     path("<int:pk>/", views.UAVDetailView.as_view()),
     path("create/", views.UAVCreateView.as_view()),
     path("<int:pk>/update/", views.UAVUpdateView.as_view()),
+    path("<int:pk>/delete/", views.UAVDeleteView.as_view()),
     # UAV Category URLs
     path("category/", views.UAVCategoryListView.as_view()),
     path("category/<int:pk>/", views.UAVCategoryDetailView.as_view()),
     path("category/create/", views.UAVCategoryCreateView.as_view()),
     path("category/<int:pk>/update/", views.UAVCategoryUpdateView.as_view()),
+    path("category/<int:pk>/delete/", views.UAVCategoryDeleteView.as_view()),
 ]

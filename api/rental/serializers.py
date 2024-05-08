@@ -1,12 +1,14 @@
 from django.utils import timezone
 from rest_framework import serializers
 from uav.serializers import UAVSerializer
+from user.serializers import UserSerializer
 
 from rental.models import UAVRental
 
 
 class UAVRentalSerializer(serializers.ModelSerializer):
     uav = UAVSerializer()
+    user = UserSerializer()
 
     class Meta:
         model = UAVRental
@@ -52,6 +54,7 @@ class UAVRentalCreateSerializer(serializers.ModelSerializer):
             "return_date": {"required": True},
         }
 
+    # Validation
     def validate(self, data):
         # Check if return_date is greater than rental_date
         if data["return_date"] <= data["rental_date"]:
@@ -81,6 +84,7 @@ class UAVRentalUpdateSerializer(serializers.ModelSerializer):
             "return_date": {"required": True},
         }
 
+    # Validation
     def validate(self, data):
         # Check if return_date is greater than rental_date
         if data["return_date"] <= data["rental_date"]:
