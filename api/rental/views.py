@@ -8,7 +8,11 @@ from rest_framework.generics import (
 
 from api.permissions import IsRequesterOrSuperUser, IsSuperUser
 from rental.models import UAVRental
-from rental.serializers import UAVRentalUpdateSerializer, UAVRentalSerializer, UAVRentalCreateSerializer
+from rental.serializers import (
+    UAVRentalCreateSerializer,
+    UAVRentalSerializer,
+    UAVRentalUpdateSerializer,
+)
 
 
 class UAVRentalListView(ListAPIView):

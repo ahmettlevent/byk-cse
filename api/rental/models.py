@@ -6,7 +6,7 @@ class UAVRental(models.Model):
     # UAV and User
     uav = models.ForeignKey("uav.UAV", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     # Rental Dates
     rental_date = models.DateTimeField()
     return_date = models.DateTimeField()

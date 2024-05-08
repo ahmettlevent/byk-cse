@@ -8,7 +8,7 @@ from rest_framework.generics import (
 
 from api.permissions import IsSuperUser
 from uav.models import UAV
-from uav.serializers.uav import UAVSerializer, UAVCreateUpdateSerializer
+from uav.serializers.uav import UAVCreateUpdateSerializer, UAVSerializer
 
 
 class UAVListView(ListAPIView):

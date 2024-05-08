@@ -17,7 +17,7 @@ class Command(BaseCommand):
                 "Please provide INIT_USERNAME, INIT_PASSWORD, and INIT_EMAIL environment variables."
             )
             return
-        
+
         if User.objects.filter(username=username).exists():
             self.stdout.write(f"User {username} already exists. Skipping creation.")
             return
