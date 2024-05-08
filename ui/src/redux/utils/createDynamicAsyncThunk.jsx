@@ -8,7 +8,8 @@ export const createDynamicAsyncThunkPost = (
   type,
   endpoint,
   successCallback,
-  errorCallback
+  errorCallback,
+  includeHeaders = true
 ) => {
   return createAsyncThunk(
     type,
@@ -19,9 +20,11 @@ export const createDynamicAsyncThunkPost = (
           `${getBaseURL()}/${customUrl || endpoint}`,
           data || {},
           {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+            headers: includeHeaders
+              ? {
+                  Authorization: `Bearer ${accessToken}`,
+                }
+              : {},
           }
         );
 

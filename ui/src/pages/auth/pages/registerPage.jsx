@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../../redux/features/auth/authActions";
 import { authLogout } from "../../../redux/features/auth/authSlice";
+import { userRegister } from "../../../redux/features/user/userAction";
 
 function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -20,7 +21,17 @@ function RegisterPage() {
   const user = useSelector((state) => state.user);
 
   const handleSubmit = () => {
-    // dispatch
+    dispatch(
+      userRegister({
+        data: {
+          username,
+          password,
+          email,
+          first_name: firstName,
+          last_name: lastName,
+        },
+      })
+    );
   };
 
   useEffect(() => {
