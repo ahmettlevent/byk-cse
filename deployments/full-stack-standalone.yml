@@ -1,0 +1,47 @@
+version: '3.9'
+
+volumes:
+  pg_db: {}
+  ui_files: {}
+
+services:
+  ui:
+    image: ui:0.1
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ui_files:/app/dist
+
+  api:
+    image: api:0.1
+    restart: always
+    depends_on:
+      - pg_database
+    ports:
+      - 8000:8000
+    environment:
+      # Django Settings
+      - DJANGO_SECRET_KEY=my_secret_key
+
+      # Init User
+      - INIT_USERNAME=admin
+      - INIT_EMAIL=admin@mail.com
+      - INIT_PASSWORD=admin
+
+      # Database Settings
+      - DATABASE_NAME=test_db
+      - DATABASE_USER=test_user
+      - DATABASE_PASSWORD=test_password
+      - DATABASE_HOST=pg_database
+      - DATABASE_PORT=5432
+
+  pg_database:
+    image: postgres:14-alpine
+    restart: always
+    volumes:
+      - pg_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=test_password
+      - POSTGRES_USER=test_user
+      - POSTGRES_DB=test_db
