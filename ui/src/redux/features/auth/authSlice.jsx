@@ -53,6 +53,7 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // Auth Action Builders
     authLoginBuilder(builder);
   },
 });

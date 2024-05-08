@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     if (auth.success && !user.success && !user.loading) {
-      dispatch(userGet({ accessToken: auth.accessToken }));
+      dispatch(userGet());
     }
   }, [auth.success, user.success]);
 

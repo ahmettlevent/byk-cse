@@ -86,7 +86,6 @@ const Dashboard = () => {
           <RentedUav />
         </TabPanel>
         <TabPanel value={currTab} index={2}>
-          <Typography variant="h5">Profile</Typography>
           <Profile />
         </TabPanel>
       </Container>
@@ -104,10 +103,10 @@ function TabPanel(props) {
       id={`tabpanel-${index}`}
       aria-labelledby={`tab-${index}`}
       {...other}
-      sx={{ paddingX: 0, paddingY: 3,width: "100%" }}
+      sx={{ width: "100%" }}
     >
       {value === index && (
-        <Box sx={{ paddingX: 0, paddingY: 3 }}>{children}</Box>
+        <Box sx={{ paddingX: 0, paddingY: 3, width:"100%" }}>{children}</Box>
       )}
     </Container>
   );

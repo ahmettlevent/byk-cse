@@ -80,11 +80,11 @@ const uavSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    // UAV Actions
+    // UAV Action Builders
     uavListBuilder(builder);
     uavPostBuilder(builder);
 
-    // UAV Category Actions
+    // UAV Category Action Builders
     uavCategoryListBuilder(builder);
     uavCategoryPostBuilder(builder);
   },

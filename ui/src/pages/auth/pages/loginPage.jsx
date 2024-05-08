@@ -5,20 +5,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../../redux/features/auth/authActions";
 import { authLogout } from "../../../redux/features/auth/authSlice";
+import { userGet } from "../../../redux/features/user/userAction";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const auth = useSelector((state) => state.auth);
-  const user = useSelector((state) => state.user);
 
   const handleSubmit = () => {
-    dispatch(authLogin({ username, password }));
+    dispatch(authLogin({ data: { username, password } }));
   };
+
+  useEffect(() => {
+    if (auth.success) {
+      dispatch(userGet());
+    }
+  }, [auth.success]);
 
   useEffect(() => {
     dispatch(authLogout());
@@ -27,7 +32,12 @@ function LoginPage() {
   return (
     <Container maxWidth="xs">
       <div style={{ marginTop: "100px" }}>
-        <Typography variant="h5" align="center" gutterBottom style={{ fontWeight: "bold" }}>
+        <Typography
+          variant="h5"
+          align="center"
+          gutterBottom
+          style={{ fontWeight: "bold" }}
+        >
           LOGIN
         </Typography>
         <Grid container spacing={2}>
@@ -61,7 +71,11 @@ function LoginPage() {
           Login
         </Button>
 
-        <Typography variant="body2" align="center" style={{ marginTop: "20px" }}>
+        <Typography
+          variant="body2"
+          align="center"
+          style={{ marginTop: "20px" }}
+        >
           Don't have an account? <Link to="/auth/register">Register</Link>
         </Typography>
       </div>

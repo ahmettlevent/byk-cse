@@ -12,12 +12,12 @@ export const createDynamicAsyncThunkPost = (
 ) => {
   return createAsyncThunk(
     type,
-    async (requestData, { rejectWithValue, getState }) => {
+    async ({ data, customUrl }, { rejectWithValue, getState }) => {
       try {
         const accessToken = getState().auth.accessToken;
         const response = await axios.post(
-          `${getBaseURL()}/${endpoint}`,
-          requestData || {},
+          `${getBaseURL()}/${customUrl || endpoint}`,
+          data || {},
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -48,7 +48,6 @@ export const createDynamicAsyncThunkPost = (
   );
 };
 
-
 export const createDynamicAsyncThunkGet = (
   type,
   endpoint,
@@ -57,14 +56,106 @@ export const createDynamicAsyncThunkGet = (
 ) => {
   return createAsyncThunk(
     type,
-    async (requestData, { rejectWithValue, getState }) => {
+    async (customEndpoint, { rejectWithValue, getState }) => {
       try {
         const accessToken = getState().auth.accessToken;
-        const response = await axios.get(`${getBaseURL()}/${endpoint}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await axios.get(
+          `${getBaseURL()}/${customEndpoint || endpoint}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        successCallback && successCallback(response.data);
+
+        return response.data;
+      } catch (error) {
+        errorCallback && errorCallback(error);
+        if (error.response && error.response.data) {
+          if (error.response.status === 401) {
+            store.dispatch(authLogout());
+          }
+
+          let errorMessage = "";
+          for (const key in error.response.data) {
+            errorMessage += `${error.response.data[key]}\n`;
+          }
+          return rejectWithValue(errorMessage);
+        } else {
+          return rejectWithValue(error.message);
+        }
+      }
+    }
+  );
+};
+
+// PUT
+export const createDynamicAsyncThunkPut = (
+  type,
+  endpoint,
+  successCallback,
+  errorCallback
+) => {
+  return createAsyncThunk(
+    type,
+    async ({ data, customUrl }, { rejectWithValue, getState }) => {
+      try {
+        const accessToken = getState().auth.accessToken;
+        const response = await axios.put(
+          `${getBaseURL()}/${customUrl || endpoint}`,
+          data || {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        successCallback && successCallback(response.data);
+
+        return response.data;
+      } catch (error) {
+        errorCallback && errorCallback(error);
+        if (error.response && error.response.data) {
+          if (error.response.status === 401) {
+            store.dispatch(authLogout());
+          }
+
+          let errorMessage = "";
+          for (const key in error.response.data) {
+            errorMessage += `${error.response.data[key]}\n`;
+          }
+          return rejectWithValue(errorMessage);
+        } else {
+          return rejectWithValue(error.message);
+        }
+      }
+    }
+  );
+};
+
+// DELETE 
+export const createDynamicAsyncThunkDelete = (
+  type,
+  endpoint,
+  successCallback,
+  errorCallback
+) => {
+  return createAsyncThunk(
+    type,
+    async ({ customUrl }, { rejectWithValue, getState }) => {
+      try {
+        const accessToken = getState().auth.accessToken;
+        const response = await axios.delete(
+          `${getBaseURL()}/${customUrl || endpoint}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
 
         successCallback && successCallback(response.data);
 
@@ -88,48 +179,3 @@ export const createDynamicAsyncThunkGet = (
     }
   );
 }
-
-// PUT 
-export const createDynamicAsyncThunkPut = (
-  type,
-  endpoint,
-  successCallback,
-  errorCallback
-) => {
-  return createAsyncThunk(
-    type,
-    async (requestData, { rejectWithValue, getState }) => {
-      try {
-        const accessToken = getState().auth.accessToken;
-        const response = await axios.put(
-          `${getBaseURL()}/${endpoint}`,
-          requestData || {},
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        successCallback && successCallback(response.data);
-
-        return response.data;
-      } catch (error) {
-        errorCallback && errorCallback(error);
-        if (error.response && error.response.data) {
-          if (error.response.status === 401) {
-            store.dispatch(authLogout());
-          }
-
-          let errorMessage = "";
-          for (const key in error.response.data) {
-            errorMessage += `${error.response.data[key]}\n`;
-          }
-          return rejectWithValue(errorMessage);
-        } else {
-          return rejectWithValue(error.message);
-        }
-      }
-    }
-  );
-};

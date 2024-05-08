@@ -1,15 +1,18 @@
-import { Button, Container, Divider, Toolbar, Typography } from "@mui/material";
+import { Button, Divider, Toolbar, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { getBaseURL } from "../../../helpers/baseUrl";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  uavCategoryDelete,
   uavCategoryList,
+  uavDelete,
   uavList,
 } from "../../../redux/features/uav/uavActions";
 import UavCreateDrawer from "../drawers/uavCreateDrawer";
 import UavCategoryCreateDrawer from "../drawers/uavCategoryCreateDrawer";
 import RentUavDrawer from "../drawers/rentUavDrawer";
+import { rentalDelete } from "../../../redux/features/rental/rentalActions";
 
 const uavColumns = [
   {
@@ -29,7 +32,15 @@ const uavColumns = [
     editable: false,
     valueGetter: (params) => `${params.id} | ${params.name} `,
   },
-  { field: "price", headerName: "Price", width: 150, editable: true },
+  {
+    field: "price",
+    headerName: "Price",
+    width: 150,
+    editable: true,
+    renderCell: (params) => {
+      return params.row.price ? params.row.price + " USD" : "N/A";
+    },
+  },
   { field: "stock", headerName: "Stock", width: 150, editable: true },
   { field: "width", headerName: "Width", width: 150, editable: true },
   { field: "height", headerName: "Height", width: 150, editable: true },
@@ -62,7 +73,7 @@ function RentUav() {
   useEffect(() => {
     dispatch(uavList());
     dispatch(uavCategoryList());
-  }, [dispatch]);
+  }, []);
 
   // Update
   let handleUpdateUav = (id, newRow) => {
@@ -111,23 +122,72 @@ function RentUav() {
       .catch((error) => {});
   };
 
-  // Extra Column for Renting
-  const rentColumn = {
-    field: "rent",
-    headerName: "Rent",
-    width: 150,
+  // Extra Column for UAV
+  const managementColumn = {
+    field: "management",
+    headerName: "Management",
+    width: 230,
+    align: "center",
+    headerAlign: "center",
     renderCell: (params) => {
       return (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            setRentUavDrawerOpen(true);
-            setRentUavId(params.id);
-          }}
-        >
-          Rent
-        </Button>
+        <>
+          <Button
+            sx={{ mr: 1 }}
+            variant="contained"
+            size="small"
+            color="primary"
+            onClick={() => {
+              setRentUavDrawerOpen(true);
+              setRentUavId(params.id);
+            }}
+          >
+            Rent
+          </Button>
+          {user.isSuperuser && (
+            <Button
+              variant="contained"
+              size="small"
+              color="error"
+              onClick={() => {
+                dispatch(uavDelete({ customUrl: `uav/${params.id}/delete/` }));
+              }}
+            >
+              Delete
+            </Button>
+          )}
+        </>
+      );
+    },
+  };
+
+  // Extra Columns for UAV Category
+  const managementCategoryColumn = {
+    field: "management",
+    headerName: "Management",
+    width: 230,
+    align: "center",
+    headerAlign: "center",
+    renderCell: (params) => {
+      return (
+        <>
+          {user.isSuperuser && (
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              onClick={() => {
+                dispatch(
+                  uavCategoryDelete({
+                    customUrl: `uav/category/${params.id}/delete/`,
+                  })
+                );
+              }}
+            >
+              Delete
+            </Button>
+          )}
+        </>
       );
     },
   };
@@ -144,7 +204,8 @@ function RentUav() {
         <Button
           variant="contained"
           color="secondary"
-          sx={{ alignSelf: "flex-end", mb: 2, ml: 2 }}
+          size="small"
+          sx={{ mb: 2 }}
           onClick={() => setCreateDrawerOpen(true)}
         >
           Add UAV
@@ -152,8 +213,8 @@ function RentUav() {
       )}
       <DataGrid
         rows={uav.uavs}
-        columns={[...uavColumns, rentColumn]}
-        pageSize={5}
+        columns={[managementColumn, ...uavColumns]}
+        pageSize={10}
         rowSelection={false}
         processRowUpdate={(newRow) => {
           handleUpdateUav(newRow.id, newRow);
@@ -162,36 +223,40 @@ function RentUav() {
       />
       <Divider sx={{ my: 1 }} />
 
-      <Typography variant="h5" gutterBottom sx={{ mt: 5 }}>
-        UAV Categories
-      </Typography>
-
-      <Typography variant="p" gutterBottom>
-        Available UAVs for rent, with their details and rent prices.
-      </Typography>
-
-      <Divider sx={{ my: 1 }} />
-
       {user.isSuperuser && (
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{ alignSelf: "flex-end", mb: 2, ml: 2 }}
-          onClick={() => setCreateCategoryDrawerOpen(true)}
-        >
-          Add Category
-        </Button>
+        <>
+          <Typography variant="h5" gutterBottom sx={{ mt: 5 }}>
+            UAV Categories
+          </Typography>
+
+          <Typography variant="p" gutterBottom>
+            Create and manage UAV categories.
+          </Typography>
+
+          <Divider sx={{ my: 1 }} />
+
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            sx={{ mb: 2 }}
+            onClick={() => setCreateCategoryDrawerOpen(true)}
+          >
+            Add Category
+          </Button>
+          <DataGrid
+            rows={uav.categories}
+            columns={[managementCategoryColumn, ...uavCategoryColumns]}
+            pageSize={5}
+            rowSelection={false}
+            processRowUpdate={(newRow) => {
+              handleUpdateUavCategory(newRow.id, newRow);
+              return newRow;
+            }}
+          />
+          <Divider sx={{ my: 1 }} />
+        </>
       )}
-      <DataGrid
-        rows={uav.categories}
-        columns={uavCategoryColumns}
-        pageSize={5}
-        rowSelection={false}
-        processRowUpdate={(newRow) => {
-          handleUpdateUavCategory(newRow.id, newRow);
-          return newRow;
-        }}
-      />
 
       <Toolbar />
 

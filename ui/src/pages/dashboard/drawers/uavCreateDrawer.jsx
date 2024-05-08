@@ -26,8 +26,8 @@ function UavCreateDrawer({ open, setOpen }) {
   const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(uavCategoryList({}));
-  }, []);
+    open && dispatch(uavCategoryList());
+  }, [open]);
 
   let handleCreateUav = (e) => {
     e.preventDefault();

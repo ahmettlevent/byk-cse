@@ -31,12 +31,12 @@ const userSlice = createSlice({
       state.success = false;
     });
     builder.addCase(userGet.fulfilled, (state, action) => {
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
+      state.firstName = action.payload.first_name;
+      state.lastName = action.payload.last_name;
       state.username = action.payload.username;
       state.email = action.payload.email;
-      state.isActive = action.payload.isActive;
-      state.isSuperuser = action.payload.isSuperuser;
+      state.isActive = action.payload.is_active;
+      state.isSuperuser = action.payload.is_superuser;
 
       state.loading = false;
       state.success = true;

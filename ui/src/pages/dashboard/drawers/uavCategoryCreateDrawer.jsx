@@ -9,10 +9,6 @@ function UavCategoryCreateDrawer({ open, setOpen }) {
 
   const auth = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    dispatch(uavCategoryList({}));
-  }, []);
-
   let handleCreateUavCategory = (e) => {
     e.preventDefault();
 
@@ -51,7 +47,7 @@ function UavCategoryCreateDrawer({ open, setOpen }) {
         onSubmit={handleCreateUavCategory}
       >
         <Typography variant="h6" gutterBottom>
-          Create UAV  Category
+          Create UAV Category
         </Typography>
         <Divider sx={{ my: 1 }} />
 

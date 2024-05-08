@@ -1,31 +1,35 @@
 import { Button, Divider, Drawer, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { uavCategoryList } from "../../../redux/features/uav/uavActions";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
-import { rentalPost } from "../../../redux/features/rental/rentalActions";
+import {
+  rentalPost,
+  rentalUpdate,
+} from "../../../redux/features/rental/rentalActions";
 
 import PropTypes from "prop-types";
+import { getBaseURL } from "../../../helpers/baseUrl";
 
-function RentUavDrawer({ rentUavId, open, setOpen }) {
+function RentedUavUpdateDrawer({ rentalId, open, setOpen }) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
   const dispatch = useDispatch();
 
-  let handleCreateUav = (e) => {
+  let handleUpdateRental = (e) => {
     e.preventDefault();
 
     dispatch(
-      rentalPost({
+      rentalUpdate({
         data: {
-          uav: rentUavId,
+          id: rentalId,
           rental_date: formatDate(startDate),
           return_date: formatDate(endDate),
         },
+        customUrl: `rental/${rentalId}/update/`,
       })
     );
 
@@ -47,7 +51,7 @@ function RentUavDrawer({ rentUavId, open, setOpen }) {
     >
       <form
         style={{ padding: "20px", width: "600px" }}
-        onSubmit={handleCreateUav}
+        onSubmit={handleUpdateRental}
       >
         <Typography variant="h6" gutterBottom>
           Rent UAV
@@ -81,20 +85,20 @@ function RentUavDrawer({ rentUavId, open, setOpen }) {
           variant="contained"
           color="primary"
           fullWidth
-          sx={{ mt: 3 }}
           size="small"
+          sx={{ mt: 3 }}
         >
-          Rent UAV
+          Update Rental
         </Button>
       </form>
     </Drawer>
   );
 }
 
-RentUavDrawer.propTypes = {
-  rentUavId: PropTypes.number,
+RentedUavUpdateDrawer.propTypes = {
+  rentalId: PropTypes.number,
   open: PropTypes.bool,
   setOpen: PropTypes.func,
 };
 
-export default RentUavDrawer;
+export default RentedUavUpdateDrawer;
