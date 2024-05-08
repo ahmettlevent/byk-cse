@@ -78,7 +78,7 @@ To run api tests, run the following command
 
 ### - UI
 - Node.js v20.11.0
-
+- Copy production.env and create .env file. ( Default environments are enough to start. )
 ```bash
   cd ui
   npm install
