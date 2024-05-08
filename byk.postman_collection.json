@@ -1,0 +1,828 @@
+{
+	"info": {
+		"_postman_id": "c36b34e3-4ca6-47a4-b3d4-bcb9eaa02eb6",
+		"name": "bykr-cse-stdy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9857056"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "List All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/user/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Any User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/user/6/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/user/me/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/user/6/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/user/5/delete/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								"5",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Get Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/token/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxNTE5MzA2NCwiaWF0IjoxNzE1MTA2NjY0LCJqdGkiOiIxYjRmNDFlZGExZjk0MDM0ODg4ZmIwMzc4NWRhOTIxZCIsInVzZXJfaWQiOjQsInVzZXJuYW1lIjoiYWRtaW4ifQ.NddzvGe0S0QspJhou3x-CizOQ9WlAGTBg2R3LJ6KqDc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/token/refresh/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"token",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "ahmet@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "ahmet2",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "ahmet1234",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Ahmet",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Levent",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/register/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UAV",
+			"item": [
+				{
+					"name": "Get UAV",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/uav/3/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/uav/category/2/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								"category",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List UAV",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/uav/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/uav/category/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create UAV",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New UAVV",
+									"type": "text"
+								},
+								{
+									"key": "brand",
+									"value": "New brand",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "model",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "width",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "height",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/uav/create/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New Category",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "New Description",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/uav/category/create/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								"category",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update UAV",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New UAVV",
+									"type": "text"
+								},
+								{
+									"key": "brand",
+									"value": "New brand",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "model",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "width",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "height",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/uav/3/update/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								"3",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New Categoryyyy",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "New Description",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/uav/category/3/update/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								"category",
+								"3",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete UAV",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/uav/3/delete/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								"3",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/uav/category/3/delete/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"uav",
+								"category",
+								"3",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rental",
+			"item": [
+				{
+					"name": "Get Rental",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/rental/3/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"rental",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Rental",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/rental/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"rental",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Rental",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "uav_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "rental_date",
+									"value": "2024-10-16",
+									"type": "text"
+								},
+								{
+									"key": "return_date",
+									"value": "2024-10-18",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/rental/create/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"rental",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Rental",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "uav_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "rental_date",
+									"value": "2024-10-16",
+									"type": "text"
+								},
+								{
+									"key": "return_date",
+									"value": "2024-10-18",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/rental/create/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"rental",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Rental",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rental_date",
+									"value": "2024-02-13",
+									"type": "text"
+								},
+								{
+									"key": "return_date",
+									"value": "2024-10-19",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/rental/2/update/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"rental",
+								"2",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
