@@ -24,8 +24,8 @@ class UAVRentalSerializer(serializers.ModelSerializer):
 
 class UAVRentalCreateSerializer(serializers.ModelSerializer):
     # Foreign Key
-    uav_id = serializers.PrimaryKeyRelatedField(
-        queryset=UAVSerializer.Meta.model.objects.all(), source="uav"
+    uav = serializers.PrimaryKeyRelatedField(
+        queryset=UAVSerializer.Meta.model.objects.all(), required=True
     )
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
@@ -43,7 +43,7 @@ class UAVRentalCreateSerializer(serializers.ModelSerializer):
         model = UAVRental
         fields = (
             "user",
-            "uav_id",
+            "uav",
             "rental_date",
             "return_date",
         )

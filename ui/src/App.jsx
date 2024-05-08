@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect } from "react";
+import Auth from "./pages/auth";
+import { Route, Routes } from "react-router-dom";
+import { SnackbarProvider } from "notistack";
+import { CssBaseline } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {useNavigate } from "react-router-dom";
+import { userGet } from "./redux/features/user/userAction";
+import Dashboard from "./pages/dashboard";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const auth = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!auth.success && !auth.loading) {
+      navigate(`/auth/login`);
+    }
+  }, [auth.success]);
+
+  useEffect(() => {
+    if (auth.success && !user.success && !user.loading) {
+      dispatch(userGet({ accessToken: auth.accessToken }));
+    }
+  }, [auth.success, user.success]);
+
+  useEffect(() => {
+    if (auth.success && user.success) {
+      navigate(`/`);
+    }
+  }, [auth.success, user.success]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <CssBaseline enableColorScheme />
+      <SnackbarProvider
+        transitionDuration={300}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        {/* ROUTES */}
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="auth/*" element={<Auth />} />
+          <Route path="*" element={<div>404</div>} />
+        </Routes>
+      </SnackbarProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

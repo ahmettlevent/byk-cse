@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_simplejwt",
+    "corsheaders",
     "user",
     "uav",
     "rental",
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
 ]
 
 ROOT_URLCONF = "api.urls"
@@ -158,3 +160,13 @@ URL_PREFIX = os.environ.get("URL_PREFIX", "api/v1")
 
 # Simple JWT settings
 SIMPLE_JWT["SIGNING_KEY"] = SECRET_KEY
+
+
+# Custom settings
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_ALL_ORIGINS = True  # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_URLS_REGEX = r'^/api/.*$'

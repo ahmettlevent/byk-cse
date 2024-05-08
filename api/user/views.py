@@ -24,3 +24,16 @@ class UserDetailView(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+
+class CurrentUserView(RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def get_object(self):
+        return self.request.user
