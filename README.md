@@ -98,7 +98,7 @@ To run api tests, run the following command
   
   # Build UI Image
   cd ui
-  docker image build -t ui:0.1
+  docker image build -t ui:0.1 .
 ```
 ### -  Deploy
 ```bash
